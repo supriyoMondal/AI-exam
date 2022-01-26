@@ -54,6 +54,14 @@ class Graph {
     }
     console.log('Node not found');
   }
+  reinitializeGraph() {
+    this.solutionNode = null;
+    this.list.forEach((item) => {
+      item.setColor(0);
+      item.setEndTime(0);
+      item.setStartTime(0);
+    });
+  }
 }
 
 module.exports = Graph;

@@ -44,8 +44,8 @@ const doDFS = (graph = new Graph(), index = 0) => {
       return;
     }
 
-    node.adjacentNodes.forEach((item) => {
-      const currentNode = list[item];
+    node.adjacentNodes.forEach((nodeIndex) => {
+      const currentNode = list[nodeIndex];
       if (currentNode.color === 0) {
         currentNode.setParentNode(node);
         dfs(currentNode, list, graph);
@@ -65,4 +65,50 @@ const doDFS = (graph = new Graph(), index = 0) => {
   }
 };
 
-module.exports = { doDFS, printValues };
+const doBFS = (graph = new Graph(), index = 0) => {
+  console.log('STARTING BFS');
+  let globalTime = 0;
+  let solved = false;
+  let list = graph.list;
+  let queue = [];
+  let node = list[index];
+
+  queue.push(node);
+  console.log(`queue -> ${printValues(queue)}`);
+  node.setColor(1);
+  node.setStartTime(++globalTime);
+  if (node.value === graph.goal) {
+    console.log('NODE FOUND');
+    solved = true;
+    node.setEndTime(++globalTime);
+    node.setColor(2);
+    graph.setSolutionNode(node);
+    return;
+  }
+  while (queue.length) {
+    const currentNode = queue.shift();
+    console.log(`queue -> ${printValues(queue)}`);
+    currentNode.adjacentNodes.forEach((nodeIndex) => {
+      let _node = list[nodeIndex];
+      if (_node.color === 0) {
+        _node.setColor(1);
+        _node.setStartTime(++globalTime);
+        _node.setParentNode(currentNode);
+        queue.push(_node);
+        console.log(`queue -> ${printValues(queue)}`);
+        if (_node.value === graph.goal) {
+          console.log('NODE FOUND');
+          solved = true;
+          _node.setEndTime(++globalTime);
+          _node.setColor(2);
+          graph.setSolutionNode(_node);
+          return;
+        }
+      }
+    });
+    node.setEndTime(++globalTime);
+    node.setColor(2);
+  }
+};
+
+module.exports = { doDFS, printValues, doBFS };

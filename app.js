@@ -1,5 +1,5 @@
 const Graph = require('./Graph');
-const { doDFS } = require('./search');
+const { doDFS, doBFS } = require('./search');
 
 const vertices = [0, 1, 2, 3, 4];
 const graph = new Graph({ vertices: [...new Set(vertices)], undirected: true });
@@ -10,6 +10,8 @@ graph.addEdge(0, 2);
 graph.addEdge(1, 2);
 graph.addEdge(2, 4);
 
-doDFS(graph, 0);
-
-graph.showSolutionPath();
+// doBFS(graph, 0);
+// graph.showSolutionPath();
+// graph.reinitializeGraph();
+// doDFS(graph, 0);
+// graph.showSolutionPath();
