@@ -111,7 +111,6 @@ const doBFS = (graph = new Graph(), index = 0) => {
 };
 
 const doDLS = (graph = new Graph(), depth = 0, index = 0) => {
-  console.log('STARTING DLS');
   let globalTime = 0;
   let solved = false;
   let list = graph.list;
@@ -167,4 +166,17 @@ const doDLS = (graph = new Graph(), depth = 0, index = 0) => {
   }
 };
 
-module.exports = { doDFS, printValues, doBFS, doDLS };
+const doIDS = (graph = new Graph(), startIndex = 0) => {
+  let list = graph.list;
+  for (let i = 0; i < list.length; i++) {
+    console.log(`Iteration ${i}`);
+    doDLS(graph, i, startIndex);
+    if (graph.solutionNode) {
+      graph.showSolutionPath();
+      return;
+    }
+    graph.reinitializeGraph();
+  }
+};
+
+module.exports = { doDFS, printValues, doBFS, doDLS, doIDS };
