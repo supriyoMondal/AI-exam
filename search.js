@@ -203,7 +203,6 @@ const doIBS = (graph = new Graph(), startIndex = 0) => {
     let count = 0;
     for (let i = 0; i < list.length; i++) {
       const adjNode = list[i];
-
       if (adjNode.color === 0) {
         count++;
       }
@@ -222,7 +221,7 @@ const doIBS = (graph = new Graph(), startIndex = 0) => {
 
   for (let i = 0; i < list.length; i++) {
     console.log(`Iteration ${i}`);
-    const currentNode = list[i];
+    const currentNode = list[startIndex];
     if (currentNode.color === 0) {
       ibs(currentNode, list, i);
     }

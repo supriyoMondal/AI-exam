@@ -7,6 +7,7 @@ class Node {
   endTime = 0;
   parentNode;
   edgeValues = [];
+  pathCost = 0;
   constructor({ index = 0, value = 0 }) {
     this.index = index;
     this.value = value;
@@ -35,6 +36,9 @@ class Node {
   }
   addEdgeValue(value) {
     this.edgeValues.push(value);
+  }
+  setPathCost(value) {
+    this.pathCost = value;
   }
 }
 

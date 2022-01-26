@@ -44,7 +44,7 @@ class Graph {
       if (!path) {
         path = `${startNode.index}`;
       } else {
-        path = `${path} ---> ${startNode.index}`;
+        path = `${path} <--- ${startNode.index}`;
       }
       startNode = startNode.parentNode;
     }
