@@ -179,4 +179,60 @@ const doIDS = (graph = new Graph(), startIndex = 0) => {
   }
 };
 
-module.exports = { doDFS, printValues, doBFS, doDLS, doIDS };
+const doIBS = (graph = new Graph(), startIndex = 0) => {
+  let globalTime = 0;
+  let solved = false;
+  let list = graph.list;
+  let stack = [];
+
+  const ibs = (node, list = [], breadthLimit) => {
+    if (node.color !== 0) {
+      return;
+    }
+    stack.push(node);
+    console.log(`stack -> ${printValues(stack)}`);
+    node.setStartTime(++globalTime);
+    node.setColor(1);
+    if (node.value === graph.goal) {
+      solved = true;
+      node.setEndTime(++globalTime);
+      node.setColor(2);
+      graph.solutionNode = node;
+      return;
+    }
+    let count = 0;
+    for (let i = 0; i < list.length; i++) {
+      const adjNode = list[i];
+
+      if (adjNode.color === 0) {
+        count++;
+      }
+      if (count > breadthLimit) break;
+      if (adjNode.color === 0) {
+        adjNode.setParentNode(node);
+        ibs(adjNode, list, breadthLimit);
+      }
+      if (solved) return;
+    }
+    node.setEndTime(++globalTime);
+    node.setColor(2);
+    stack.pop();
+    console.log(`stack -> ${printValues(stack)}`);
+  };
+
+  for (let i = 0; i < list.length; i++) {
+    console.log(`Iteration ${i}`);
+    const currentNode = list[i];
+    if (currentNode.color === 0) {
+      ibs(currentNode, list, i);
+    }
+    if (!graph.solutionNode) {
+      graph.reinitializeGraph();
+    } else {
+      graph.showSolutionPath();
+      return;
+    }
+  }
+};
+
+module.exports = { doDFS, printValues, doBFS, doDLS, doIDS, doIBS };
