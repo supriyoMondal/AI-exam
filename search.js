@@ -30,7 +30,6 @@ const doDFS = (graph = new Graph(), index = 0) => {
     if (node.color !== 0) {
       return;
     }
-
     stack.push(node);
     console.log(`stack -> ${printValues(stack)}`);
     node.setStartTime(++globalTime);
@@ -111,4 +110,61 @@ const doBFS = (graph = new Graph(), index = 0) => {
   }
 };
 
-module.exports = { doDFS, printValues, doBFS };
+const doDLS = (graph = new Graph(), depth = 0, index = 0) => {
+  console.log('STARTING DLS');
+  let globalTime = 0;
+  let solved = false;
+  let list = graph.list;
+  let stack = [];
+  let node = list[index];
+
+  const dls = (
+    node = new Node({ index: 1 }),
+    list = [],
+    currentDepth,
+    depthLimit
+  ) => {
+    currentDepth++;
+    if (node.color !== 0) {
+      return;
+    }
+
+    if (currentDepth > depthLimit) {
+      node.setColor(2);
+      return;
+    }
+    stack.push(node);
+    console.log(`stack -> ${printValues(stack)}`);
+    node.setStartTime(++globalTime);
+    node.setColor(1);
+
+    if (node.value === graph.goal) {
+      solved = true;
+      node.setEndTime(++globalTime);
+      node.setColor(2);
+      graph.setSolutionNode(node);
+      return;
+    }
+
+    node.adjacentNodes.forEach((nodeIndex) => {
+      const currentNode = list[nodeIndex];
+      if (currentNode.color === 0) {
+        currentNode.setParentNode(node);
+        dls(currentNode, list, currentDepth, depthLimit);
+      }
+      if (solved) {
+        return;
+      }
+    });
+    node.setEndTime(++globalTime);
+    node.setColor(2);
+    stack.pop();
+    console.log(`stack -> ${printValues(stack)}`);
+  };
+
+  if (node.color === 0) {
+    dls(node, list, 0, depth);
+  }
+};
+
+module.exports = { doDFS, printValues, doBFS, doDLS };
