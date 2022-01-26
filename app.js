@@ -1,14 +1,15 @@
 const Graph = require('./Graph');
 const { doDFS } = require('./search');
 
-const vertices = [2, 3, 5, 6, 7];
-const graph = new Graph({ vertices, undirected: true });
-graph.setGoal(8);
+const vertices = [0, 1, 2, 3, 4];
+const graph = new Graph({ vertices: [...new Set(vertices)], undirected: true });
+graph.setGoal(4);
+graph.addEdge(0, 3);
 graph.addEdge(0, 1);
 graph.addEdge(0, 2);
-graph.addEdge(2, 3);
-graph.addEdge(3, 4);
+graph.addEdge(1, 2);
+graph.addEdge(2, 4);
 
-console.log('Start dfs');
-doDFS(graph);
+doDFS(graph, 0);
+
 graph.showSolutionPath();

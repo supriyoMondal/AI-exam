@@ -1,4 +1,5 @@
 const Node = require('./Node');
+const { printValues } = require('./search');
 
 class Graph {
   list = [];
@@ -20,22 +21,24 @@ class Graph {
   setSolutionNode(node) {
     this.solutionNode = node;
   }
-  addEdge(start, end) {
+  addEdge(start, end, edgeValue = 1) {
     if (start >= this.list.length || end >= this.list.length) {
-      console.error('Node does not exists');
+      console.error(`One of the vertices does not exists ${start} or ${end}`);
       return;
     }
     let startNode = this.list[start];
-    let endNode = this.list[start];
+    let endNode = this.list[end];
+
     startNode.addAdjacentNode(end);
-    startNode.addEdgeValue(endNode.value);
+    startNode.addEdgeValue(edgeValue);
     if (this.undirected) {
       endNode.addAdjacentNode(start);
-      endNode.addEdgeValue(startNode.value);
+      endNode.addEdgeValue(edgeValue);
     }
   }
   showSolutionPath() {
     let startNode = this.solutionNode;
+
     let path = '';
     while (startNode) {
       if (!path) {
@@ -45,7 +48,11 @@ class Graph {
       }
       startNode = startNode.parentNode;
     }
-    console.log(path);
+    if (path) {
+      console.log(`Solution : ${path}`);
+      return;
+    }
+    console.log('Node not found');
   }
 }
 

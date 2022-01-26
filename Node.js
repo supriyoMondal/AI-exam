@@ -28,8 +28,10 @@ class Node {
   setParentNode(node) {
     this.parentNode = node;
   }
-  addAdjacentNode(node) {
-    this.adjacentNodes.push(node);
+  addAdjacentNode(index) {
+    if (!this.adjacentNodes.includes(index)) {
+      this.adjacentNodes.push(index);
+    }
   }
   addEdgeValue(value) {
     this.edgeValues.push(value);
