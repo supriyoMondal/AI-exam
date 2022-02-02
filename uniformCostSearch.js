@@ -4,7 +4,7 @@ const { printValues } = require('./search');
 
 const uniformCostSearch = (graph = new Graph(), startIndex) => {
   let globalTime = 0;
-  let solved = false;
+
   let list = graph.list;
   let queue = new PriorityQueue((a, b) => a.pathCost - b.pathCost);
 
@@ -14,7 +14,6 @@ const uniformCostSearch = (graph = new Graph(), startIndex) => {
   node.setStartTime(++globalTime);
 
   if (node.value === graph.goal) {
-    solved = true;
     node.setEndTime(++globalTime);
     node.setColor(2);
     graph.setSolutionNode(node);
@@ -25,14 +24,13 @@ const uniformCostSearch = (graph = new Graph(), startIndex) => {
     let currentNode = queue.pop();
 
     if (currentNode.value === graph.goal) {
-      solved = true;
       currentNode.setEndTime(++globalTime);
       currentNode.setColor(2);
       graph.setSolutionNode(currentNode);
       return;
     }
-    let count = -1;
 
+    let count = -1;
     currentNode.adjacentNodes.forEach((nodeIndex) => {
       count++;
       let _node = list[nodeIndex];
@@ -59,10 +57,11 @@ const uniformCostSearch = (graph = new Graph(), startIndex) => {
 
 const vertices = [1, 10, 2, 3];
 const graph = new Graph({ vertices: [...new Set(vertices)], undirected: true });
+
 graph.setGoal(10);
 
 graph.addEdge(0, 1, 4);
-graph.addEdge(0, 3, 1);
+graph.addEdge(0, 3, 2);
 graph.addEdge(3, 2, 1);
 graph.addEdge(2, 1, 1);
 

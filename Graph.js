@@ -3,11 +3,10 @@ const { printValues } = require('./search');
 
 class Graph {
   list = [];
-  solutionPath = [];
   undirected;
-  searchFlag;
   solutionNode;
   goal;
+  visited = [];
   constructor({ vertices = [], undirected = true }) {
     this.undirected = undirected;
     vertices.forEach((item, index) => {
@@ -15,6 +14,12 @@ class Graph {
     });
   }
 
+  addToVisited(node) {
+    this.visited.push(node);
+  }
+  printVisited() {
+    console.log(printValues(this.visited));
+  }
   setGoal(value) {
     this.goal = value;
   }

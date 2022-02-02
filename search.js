@@ -6,9 +6,9 @@ const printValues = (stack = []) => {
   let res = '';
   stack.forEach((item) => {
     if (!res) {
-      res = `${item.index}`;
+      res = `${item.value}`;
     } else {
-      res = `${res},${item.index}`;
+      res = `${res},${item.value}`;
     }
   });
   return `[${res}]`;
@@ -34,7 +34,7 @@ const doDFS = (graph = new Graph(), index = 0) => {
     console.log(`stack -> ${printValues(stack)}`);
     node.setStartTime(++globalTime);
     node.setColor(1);
-
+    graph.addToVisited(node);
     if (node.value === graph.goal) {
       solved = true;
       node.setEndTime(++globalTime);
@@ -55,7 +55,9 @@ const doDFS = (graph = new Graph(), index = 0) => {
     });
     node.setEndTime(++globalTime);
     node.setColor(2);
+
     stack.pop();
+
     console.log(`stack -> ${printValues(stack)}`);
   };
 

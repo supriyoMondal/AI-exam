@@ -1,26 +1,25 @@
 const Graph = require('./Graph');
-const { doDFS, doBFS, doDLS, doIDS, doIBS } = require('./search');
+const { doDFS, doBFS, doDLS, doIDS } = require('./search');
 
-const vertices = [0, 1, 2, 3, 4];
+const vertices = [1, 6, 2, 7, 3, 8, 5];
 const graph = new Graph({ vertices: [...new Set(vertices)], undirected: true });
-graph.setGoal(4);
-graph.addEdge(0, 3);
+graph.setGoal(2);
 graph.addEdge(0, 1);
 graph.addEdge(0, 2);
-graph.addEdge(1, 2);
-graph.addEdge(2, 4);
+graph.addEdge(1, 3);
+graph.addEdge(1, 4);
+graph.addEdge(1, 5);
+graph.addEdge(5, 6);
+
+doDFS(graph, 0);
+graph.printVisited();
+// graph.showSolutionPath();
 
 // doBFS(graph, 0);
 // graph.showSolutionPath();
 
-// graph.reinitializeGraph();
 // doDLS(graph, 3, 1);
 // graph.showSolutionPath();
 
-// graph.reinitializeGraph();
 // doIDS(graph, 3, 1);
-// graph.showSolutionPath();
-
-// graph.reinitializeGraph();
-// doDFS(graph, 0);
 // graph.showSolutionPath();
